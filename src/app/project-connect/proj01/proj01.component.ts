@@ -34,16 +34,16 @@ export class Proj01Component implements OnInit, OnDestroy {
   constructor( private _listuserService : ListuserService) { 
 
 	  this.alive = true;
-	  this.interval = 5000;
+	  this.interval = 50000;
 	  this.timer = Observable.timer(0, this.interval);
   }
 
 
-  handleSuccess(list_Jobs){
+  handleSuccess(data){
 	  	
 	  this.jobsFound = true;
-	  this.list_jobs = list_Jobs;
-	  console.log(list_Jobs);
+	  this.list_jobs = data.result;
+	  console.log(this.list_jobs);
   }
 
 
@@ -56,48 +56,35 @@ export class Proj01Component implements OnInit, OnDestroy {
 
   	  console.log("Processing....");
 
-  	  if (this._listuserService.authorizeuser()) {
-  	  	
   	  	this.alive = true;
-  	  	/*
-  	    this.searching = true;
-  	  	return this._listuserService.getListUserJobs()
-        .subscribe(list_jobs=>{
-          this.list_jobs = list_jobs;
-          console.log(list_jobs);
-        },
-        error => this.handleError(error),
-  		 () => this.searching = false
-        
-        )
-	*/
+ 
         //back to timer	
   	    this.ngOnInit();   
-  	 }    
+  	     
   } 
 
   ngOnInit() {
 
-  	// this.searchUserJobs();
-  	
       this.searching = true;
   	  this.timer
   	    .takeWhile(() => this.alive)
-  		.subscribe(() => {
-  			this._listuserService.getListUserJobs()
-  			    .subscribe(list_Jobs => this.handleSuccess(list_Jobs),
-  			error => this.handleError(error),
-  			() => this.searching = false
+  		    .subscribe(() => {
+  			    this._listuserService.getListUserJobs()
+  			      .subscribe(data => this.handleSuccess(data),
+  			    error => this.handleError(error),
+  			    () => this.searching = false
   			
   			) 
 
   		}) 
+   // }  
   }
 
   ngOnDestroy(){
 
     this.alive = false; // switches your IntervalObservable off
   }
+
 
 }
 

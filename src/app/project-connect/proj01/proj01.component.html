@@ -1,9 +1,25 @@
-<button (click)="searchUserJobs()" type="button">Find UserJob</button>
+<button (click)="searchUserJobs()" md-raised-button class="searchButton"type="button">Find UserJob</button>
 
-<div *ngFor= "let job of list_jobs">
-<p> data will here</p>
-<!--
-<p> JobId: {{job.jobid }} </p>
-<p> Expiry: {{job.expdate }} </p>
--->
+<div *ngIf="searching">
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
 </div>
+
+<h4 *ngIf="imagesFound" md-subeader>Results</h4>
+
+<div *ngFor= "let job of list_jobs" class="job-container">
+<div *ngIf='job.DueDate == "2017-07-31"'>
+<p> JobId: {{job?.JobID}}</p>
+<p> Description: {{job.Description }} </p>
+<p> Due Date: {{job.DueDate}} </p>
+<p> Employee ID: {{job.EmployeeID}} </p>
+</div> 
+</div>
+
+<md-card layout="column" flex style="background-color:#b70903">
+ <div flex layout="column">
+   <div flex></div>
+  <md-card-footer flex="none" style="background-color:#b70903;color:white;">
+    <p>Copyright(c) SimXXX (Pvt) Ltd</p>
+  </md-card-footer>
+ </div>
+</md-card>
